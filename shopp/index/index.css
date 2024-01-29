@@ -1,0 +1,416 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Toute la page */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Corps du site */
+
+body {
+    background: linear-gradient(45deg, #FC466B, #3F5EFB);
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+/* longueur de la page */
+
+    min-height: 150vh;
+
+  }
+
+/*------------------ Début de la Barre de Navigation ----------------*/
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 100px;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    z-index: 100;
+  }  
+
+/* Mouvement de flash de droite a gauche */
+
+.header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.39),
+    transparent
+  );
+  transition: 1s;
+}
+
+/* Mise en place su flash a gauche par défaut */
+
+.header:hover::before {
+  left: 100%;
+}
+
+/* Logo ( Web Zéphyr Designer ) */
+
+.logo {
+  color: #fff;
+  font-size: 25px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Catégorie */
+
+.navbar .categorie {
+  position: relative;
+  color: #fff;
+  font-size: 18px;
+  text-decoration: none;
+  margin-left: 35px;
+}
+
+/* Soulignement progressif */
+
+.navbar .categorie::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #fff;
+  transition: .3s;
+}
+
+.navbar .categorie:hover::before {
+  width: 100%;
+}
+
+/* Pour les écrans jusqu'à 992 pixels de large */
+
+@media (max-width: 992px) {
+  .header {
+    padding: 1.25rem 4%;
+  }
+}
+
+/* Pour les écrans jusqu'à 768 pixels de large */
+
+@media (max-width: 768px) {
+  #menu-icon {
+    display: block;
+  }
+
+/* Styles pour la barre de navigation (navbar) */
+
+.navbar {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  padding: 0.5rem 4%;
+  display: none;
+}
+
+/* Lorsque la classe 'active' est ajoutée à la barre de navigation, elle devient visible */
+
+.navbar.active {
+  display: block;
+}
+
+/* Styles pour les liens à l'intérieur de la barre de navigation */
+
+.navbar .categorie {
+  display: block;
+  margin: 1.5rem 0;
+}
+
+/* Styles pour l'arrière-plan de la barre de navigation (nav-bg) */
+
+.nav-bg {
+  position: absolute;
+  top: 79px;
+  left: 0;
+  width: 100%;
+  height: 295px;
+  background: rgba(255, 255, 255, 0.1);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  z-index: 99;
+  display: none;
+}
+
+/* Lorsque la classe 'active' est ajoutée à l'arrière-plan de la barre de navigation, il devient visible */
+
+.nav-bg.active {
+  display: block;
+  }
+}
+/*------------------- PRIX --------------------------*/
+
+.pricing-area {
+  justify-content: space-between;
+	text-align: center;
+  padding: 3% 0;
+}
+.single-pricing {
+	background: #fcfcfc;
+	box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+	transition: all .5s ease;
+}
+.deal-type {
+	background: linear-gradient(to bottom, #ff512f, #f09819);
+	padding: 15px 0;
+	font-size: 20px;
+	text-transform: uppercase;
+	font-weight: 900;
+	letter-spacing: 2px;
+	color: #fff;
+}
+.deal-amount {
+	clip-path: polygon(0 0, 100% 0%, 100% 60%, 51% 100%, 0 60%);
+	background: linear-gradient(to right, #ff512f, #f09819);
+	padding: 25px 0;
+	color: #fff;
+}
+.price .money {
+	font-size: 60px;
+	font-weight: 900;
+}
+.price .money sup {
+	font-size: 40px;
+	font-weight: 500;
+}
+.single-deal {
+	padding: 15px 0;
+	list-style: none;
+}
+.single-deal li {
+	font-size: 18px;
+	font-family: montserrat;
+	padding: 10px 0;
+}
+.btn {
+	background: linear-gradient(to right, #ff512f, #f09819);
+	border: none;
+	font-weight: 900;
+	text-transform: uppercase;
+	margin-bottom: 30px;
+	padding: 10px 50px;
+	color: #fff;
+}
+.single-pricing:hover {
+	transform: scale(1.05);
+}
+@media (max-width: 767px) {
+	.single-pricing {
+		margin-bottom: 30px;
+	}
+}
+
+
+/*-------------------- Les Avis ---------------------*/
+
+
+/* Style pour la section contenant le swiper */
+
+section {
+    position: relative;
+    height: 500px;
+    width: 1075px;
+    display: flex;
+    align-items: center;
+    min-height: 100px;
+  }
+  
+/* Style pour le conteneur du swiper */
+
+  .swiper {
+    width: 950px;
+  }
+  
+/* Style pour le conteneur avec un bord arrondi */
+
+  .container {
+    border-radius: 20px;
+  }
+  
+/* Style pour l'image circulaire à l'intérieur de la carte */
+
+  .card .image {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+  }
+  
+/* Style pour l'image à l'intérieur du conteneur circulaire */
+
+  .card .image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #000;
+  }
+  
+/* Style pour le conteneur global de la carte */
+
+  .card {
+    position: relative;
+    background: rgba(255, 255, 255, .3);
+    border: 3px solid rgba(255, 255, 255, .3);
+    border-left: 1px solid rgba(255, 255, 255, .3);
+    border-top: 1px solid rgba(255, 255, 255, .3);
+    border-radius: 20px;
+  }
+
+/* Style pour l'effet avant de la carte */
+  
+  .card::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgb(255, 255, 255);
+    clip-path: circle(55% at 0 0);
+    border-top-left-radius: 10px;
+  }
+  
+/* Style pour le contenu de la carte */
+
+  .card .card-content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 30px;
+  }
+  
+/* Style pour les médias sociaux à l'intérieur de la carte */
+
+  .card .social-media {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+/* Style pour les icônes des médias sociaux */
+
+  .card .social-media i {
+    color: #ffffff;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: .3s;
+  }
+  
+/* Style pour les icônes des médias sociaux au survol */
+
+  .card .social-media i:hover {
+    color: rgb(0, 0, 0);
+  }
+  
+/* Style pour le nom et la profession à l'intérieur de la carte */
+
+  .card .name-profession {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-top: 10px;
+    color: #fff;
+  }
+  
+/* Style pour le nom dans la carte */
+
+  .name-profession .name {
+    font-size: 20px;
+    font-weight: 600;
+  }
+  
+/* Style pour la profession dans la carte */
+
+  .name-profession .profession {
+    font-size: 15px;
+    font-weight: 500;
+  }
+  
+/* Style pour l'évaluation dans la carte */
+
+  .card .rating {
+    display: flex;
+    align-items: center;
+    margin-top: 18px;
+  }
+  
+/* Style pour les étoiles d'évaluation dans la carte */
+
+  .card .rating i {
+    font-size: 18px;
+    color: yellow;
+    margin: 0 2px;
+  }
+  
+/* Style pour les boutons dans la carte */
+
+  .card .button {
+    display: flex;
+    justify-content: space-around;
+    width: 110%;
+    margin-top: 20px;
+  }
+  
+/* Style pour les boutons dans la carte au survol */
+
+  .card .button button {
+    background: rgb(255, 255, 255);
+    border: none;
+    outline: none;
+    color: #000;
+    font-weight: 600;
+    padding: 8px 22px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: .3s;
+  }
+
+/* Style pour les boutons dans la carte au survol */
+  
+  .card .button button:hover {
+    background: #fff;
+  }
+  
+/* Style pour les points de pagination du swiper */
+
+  .swiper-pagination-bullet {
+    height: 7px;
+    width: 26px;
+    background: rgb(255, 255, 255);
+    border-radius: 25px;
+  }
+  
+/* Style pour les boutons de navigation suivant et précédent du swiper */
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: rgb(255, 255, 255);
+  }
