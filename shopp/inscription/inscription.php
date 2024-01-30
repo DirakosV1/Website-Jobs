@@ -1,37 +1,9 @@
 <?php
-    $erreur = "";
-
-    session_start() ;
-
-    if(isset($_POST["buttonregister"])){
-        if(isset($_POST['email']) && isset($_POST['password'])) {
-            $email = htmlspecialchars($_POST['email']);  
-            $password = htmlspecialchars($_POST['password']);  
-
-            $nom_serveur = "localhost";
-            $utilisateur = "root";
-            $mot_de_passe = "";
-            $nom_base_donnees = "shop";
-            $con = mysqli_connect($nom_serveur, $utilisateur, $mot_de_passe, $nom_base_donnees);
-
-            $stmt = mysqli_prepare($con, "SELECT * FROM users WHERE email=? AND password=?");
-            mysqli_stmt_bind_param($stmt, "ss", $email, $password);
-            mysqli_stmt_execute($stmt);
-            mysqli_stmt_store_result($stmt);
-
-            if(mysqli_stmt_num_rows($stmt) > 0){
-                echo '<script>window.location.href = "welcome.php";</script>';
-                $_SESSION['email'] = $email ;
-                exit();
-    
-            } else {
-                $erreur = "Adresse email ou mot de passe incorrects !";
-            }
-            
-            mysqli_stmt_close($stmt);
-            mysqli_close($con);
-        }
-    }
+session_start();
+if (isset($_SESSION["user"])) {
+   header("Location: ../users_connect/index.php");
+   exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -52,12 +24,11 @@
         <i class='bx bx-menu'></i>
             <nav class="navbar">
                 <a href="../index/index.html" class="categorie">Accueil</a>
-                <a href="#" class="categorie">Services</a>
-                <a href="#" class="categorie">A propos</a>
+                <a href="../index/index.html#Services" class="categorie">Services</a>
+                <a href="../index/index.html#Apropos" class="categorie">A propos</a>
                 <a href="../connection/connection.php" class="categorie">Connexion</a>
             </nav>
     </header>
-
 
     <div class="login-light"></div>
     <div class="login-box">
@@ -67,18 +38,80 @@
             <h2>Créer un compte</h2>
 
             <?php
-                if(isset($erreur)) {
-                    echo "<p class='erreur-message'>" . htmlspecialchars($erreur) . "</p>";
-                }
-            ?>
+    if (isset($_POST["buttonregister"])) {
+    $firstName = $_POST["firstname"];
+    $lastName = $_POST["lastname"];
+    $email = $_POST["email"];
+    $phone = $_POST["phone"];
+    $password = $_POST["password"];
+    $passwordRepeat = $_POST["repeat_password"];
 
+    // Hachage du mot de passe
+    $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
+    $errors = array();
+
+    // Vérifier si tous les champs sont remplis
+    if (empty($firstName) OR empty($lastName) OR empty($phone) OR empty($email) OR empty($password) OR empty($passwordRepeat)) {
+        array_push($errors, "<div class='erreur-message'>Veuillez remplir toutes les cases !</div>");
+    }
+
+    // Valider le format de l'email
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        array_push($errors, "<div class='erreur-message'>Email invalide</div>");
+    }
+
+    // Vérifier la longueur du mot de passe
+    if (strlen($password) < 8) {
+        array_push($errors, "<div class='erreur-message'>Le mot de passe doit contenir au moins 8 caractères !</div>");
+    }
+
+    // Vérifier si les mots de passe correspondent
+    if ($password !== $passwordRepeat) {
+        array_push($errors, "<div class='erreur-message'>Les mots de passe ne correspondent pas !</div>");
+    }
+
+    // Vérifier si l'email est déjà utilisé
+    require_once "../database.php";
+    $sql = "SELECT * FROM users WHERE email = ?";
+    $stmt = mysqli_stmt_init($conn);
+
+    if (mysqli_stmt_prepare($stmt, $sql)) {
+        mysqli_stmt_bind_param($stmt, "s", $email);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $rowCount = mysqli_num_rows($result);
+
+        if ($rowCount > 0) {
+            array_push($errors, "Cet email est déjà utilisé !");
+        }
+
+        // Afficher les erreurs s'il y en a, sinon insérer l'utilisateur dans la base de données
+        if (count($errors) > 0) {
+            foreach ($errors as $error) {
+                echo "<div class='alert alert-danger'>$error</div>";
+            }
+        } else {
+            $sql = "INSERT INTO users (prenom, nom, email, numero, password) VALUES (?, ?, ?, ?, ?)";
+            $stmt = mysqli_stmt_init($conn);
+
+            if (mysqli_stmt_prepare($stmt, $sql)) {
+                mysqli_stmt_bind_param($stmt, "sssss", $firstName, $lastName, $email, $phone, $passwordHash);
+                mysqli_stmt_execute($stmt);
+                header("Location: ../users_connect/index.php");
+            } else {
+                die("Une erreur s'est produite");
+            }
+        }
+    }
+}
+?>
 
             <div class="input-box">
                 <span class="icon">
                     <ion-icon name="body"></ion-icon>
                 </span>
-                <input type="text" name="pseudo" required>
+                <input type="text" name="firstname" required>
                 <label>Prénom</label>
                 <div class="input-line"></div>
             </div>
@@ -86,7 +119,7 @@
                 <span class="icon">
                     <ion-icon name="happy"></ion-icon>
                 </span>
-                <input type="text" name="pseudo" required>
+                <input type="text" name="lastname" required>
                 <label>Nom</label>
                 <div class="input-line"></div>
             </div>
@@ -119,7 +152,7 @@
                 <span class="icon">
                     <ion-icon name="lock-closed"></ion-icon>
                 </span>
-                <input type="password" name="password" required>
+                <input type="password" name="repeat_password" required>
                 <label>Confirmer le mot de passe</label>
                 <div class="input-line"></div>
             </div>

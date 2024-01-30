@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION["user"])) {
+   header("Location: ../connection/connection.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,13 +22,13 @@
 <!---------------------- BARRE DE NAVIGATION ------------------------>
     
     <header class="header">
-        <a href="./index.html" class="logo">Web Zephyr Designer</a>
+        <a href="./index.php" class="logo">Web Zephyr Designer</a>
         <i class='bx bx-menu'></i>
             <nav class="navbar">
-                <a href="./index.html" class="categorie">Accueil</a>
+                <a href="./index.php" class="categorie">Accueil</a>
                 <a href="#Services" class="categorie">Services</a>
                 <a href="#Apropos" class="categorie">A propos</a>
-                <a href="../connection/connection.php" class="categorie">Connexion</a>
+                <a href="../logout.php" class="categorie">Logout</a>
             </nav>
     </header>
 

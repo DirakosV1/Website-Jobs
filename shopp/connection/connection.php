@@ -1,37 +1,24 @@
 <?php
-    $erreur = "";
+// Configuration de la base de données
+$db_host = "localhost";
+$db_user = "root";
+$db_password = "";
+$db_name = "shop";
 
-    session_start() ;
+// Connexion à la base de données
+$conn = mysqli_connect($db_host, $db_user, $db_password, $db_name);
 
-    if(isset($_POST["buttonregister"])){
-        if(isset($_POST['email']) && isset($_POST['password'])) {
-            $email = htmlspecialchars($_POST['email']);  
-            $password = htmlspecialchars($_POST['password']);  
+// Vérification de la connexion
+if (!$conn) {
+    die("Erreur de connexion à la base de données: " . mysqli_connect_error());
+}
 
-            $nom_serveur = "localhost";
-            $utilisateur = "root";
-            $mot_de_passe = "";
-            $nom_base_donnees = "shop";
-            $con = mysqli_connect($nom_serveur, $utilisateur, $mot_de_passe, $nom_base_donnees);
-
-            $stmt = mysqli_prepare($con, "SELECT * FROM users WHERE email=? AND password=?");
-            mysqli_stmt_bind_param($stmt, "ss", $email, $password);
-            mysqli_stmt_execute($stmt);
-            mysqli_stmt_store_result($stmt);
-
-            if(mysqli_stmt_num_rows($stmt) > 0){
-                echo '<script>window.location.href = "welcome.php";</script>';
-                $_SESSION['email'] = $email ;
-                exit();
-    
-            } else {
-                $erreur = "Adresse email ou mot de passe incorrects !";
-            }
-            
-            mysqli_stmt_close($stmt);
-            mysqli_close($con);
-        }
-    }
+// Démarrage de la session
+session_start();
+if (isset($_SESSION["user"])) {
+    header("Location: ../users_connect/index.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -52,8 +39,8 @@
         <i class='bx bx-menu'></i>
             <nav class="navbar">
                 <a href="../index/index.html" class="categorie">Accueil</a>
-                <a href="#" class="categorie">Services</a>
-                <a href="#" class="categorie">A propos</a>
+                <a href="../index/index.html#Services" class="categorie">Services</a>
+                <a href="../index/index.html#Apropos" class="categorie">A propos</a>
                 <a href="./connection.php" class="categorie">Connexion</a>
             </nav>
     </header>
@@ -67,10 +54,27 @@
             <h2>Connexion</h2>
 
             <?php
-                if(isset($erreur)) {
-                    echo "<p class='erreur-message'>" . htmlspecialchars($erreur) . "</p>";
+        if (isset($_POST["login"])) {
+           $email = $_POST["email"];
+           $password = $_POST["password"];
+            require_once "../database.php";
+            $sql = "SELECT * FROM users WHERE email = '$email'";
+            $result = mysqli_query($conn, $sql);
+            $user = mysqli_fetch_array($result, MYSQLI_ASSOC);
+            if ($user) {
+                if (password_verify($password, $user["password"])) {
+                    session_start();
+                    $_SESSION["user"] = "yes";
+                    header("Location: ../users_connect/index.php");
+                    die();
+                }else{
+                    echo "<div class='erreur-message'>Mot de passe invalide</div>";
                 }
-            ?>
+            }else{
+                echo "<div class='erreur-message'>Email Introuvable</div>";
+            }
+        }
+?>
 
             <div class="input-box">
                 <span class="icon">
@@ -92,7 +96,7 @@
                 <label><input type="checkbox">  Se souvenir</label>
                 <a href="#">Mot de Passe oublié ?</a>
             </div>
-            <button class="buttonregister" type="submit" name="buttonregister">Login</button>
+            <button class="buttonregister" type="submit" value="login" name="login">Login</button>
             <div class="register-link">
                 <p>Pas de compte ? <a href="../inscription/inscription.php">S'enregistrer</a></p>
             </div>
