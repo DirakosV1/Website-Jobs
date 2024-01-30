@@ -212,7 +212,7 @@ body {
   }
   
   /* Style pour l'étiquette de la boîte de saisie */
-  .input-box label {
+  .input-box .babel {
     position: absolute;
     top: 50%;
     left: 5px;
@@ -221,11 +221,12 @@ body {
     color: #fff;
     pointer-events: none;
     transition: .5s ease;
+    
   }
   
   /* Style pour l'étiquette lorsqu'un champ est focus ou a une valeur */
-  .input-box input:focus~label,
-  .input-box input:valid~label {
+  .input-box input:focus~.babel,
+  .input-box input:valid~.babel {
       top: -5px;
   }
   
@@ -263,7 +264,7 @@ body {
   }
   
   /* Style pour la case à cocher dans la section rappel/mot de passe oublié */
-  .remember-forgot label input {
+  .remember-forgot .babel input {
     accent-color: #fff;
     margin-right: 3px;
     transition: .5s ease;

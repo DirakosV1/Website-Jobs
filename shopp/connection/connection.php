@@ -41,7 +41,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Web Zephyr Designer</title>
+    <title>Connexion | Web Zephyr Designer</title>
     <link rel="stylesheet" href="connection.css">
 </head>
 
@@ -64,7 +64,7 @@
         <form action="" method="POST">
             <div class="light"></div>
 
-            <h2>Login</h2>
+            <h2>Connexion</h2>
 
             <?php
                 if(isset($erreur)) {
@@ -76,8 +76,8 @@
                 <span class="icon">
                     <ion-icon name="mail"></ion-icon>
                 </span>
-                <input type="email" name="email" required>
-                <label>Email</label>
+                <input type="text" name="email" required>
+                <label class="babel">Email</label>
                 <div class="input-line"></div>
             </div>
             <div class="input-box">
@@ -85,16 +85,16 @@
                     <ion-icon name="lock-closed"></ion-icon>
                 </span>
                 <input type="password" name="password" required>
-                <label>Password</label>
+                <label class="babel">Mot de Passe</label>
                 <div class="input-line"></div>
             </div>
             <div class="remember-forgot">
-                <label><input type="checkbox"> Remember me</label>
-                <a href="#">Forgot Password?</a>
+                <label><input type="checkbox">  Se souvenir</label>
+                <a href="#">Mot de Passe oublié ?</a>
             </div>
             <button class="buttonregister" type="submit" name="buttonregister">Login</button>
             <div class="register-link">
-                <p>Don't have an account? <a href="#">Register</a></p>
+                <p>Pas de compte ? <a href="../inscription/inscription.php">S'enregistrer</a></p>
             </div>
         </form>
     </div>

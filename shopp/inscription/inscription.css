@@ -1,0 +1,329 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Toute la page */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Corps du site */
+
+body {
+    background: linear-gradient(45deg, #FC466B, #3F5EFB);
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+/*------------------ Début de la Barre de Navigation ----------------*/
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 100px;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    z-index: 100;
+  }  
+
+/* Mouvement de flash de droite a gauche */
+
+.header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.39),
+    transparent
+  );
+  transition: 1s;
+}
+
+/* Mise en place su flash a gauche par défaut */
+
+.header:hover::before {
+  left: 100%;
+}
+
+/* Logo ( Web Zéphyr Designer ) */
+
+.logo {
+  color: #fff;
+  font-size: 25px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Catégorie */
+
+.navbar .categorie {
+  position: relative;
+  color: #fff;
+  font-size: 18px;
+  text-decoration: none;
+  margin-left: 35px;
+}
+
+/* Soulignement progressif */
+
+.navbar .categorie::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #fff;
+  transition: .3s;
+}
+
+.navbar .categorie:hover::before {
+  width: 100%;
+}
+
+/* Pour les écrans jusqu'à 992 pixels de large */
+
+@media (max-width: 992px) {
+  .header {
+    padding: 1.25rem 4%;
+  }
+}
+
+/* Pour les écrans jusqu'à 768 pixels de large */
+
+@media (max-width: 768px) {
+  #menu-icon {
+    display: block;
+  }
+
+/* Styles pour la barre de navigation (navbar) */
+
+.navbar {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  padding: 0.5rem 4%;
+  display: none;
+}
+
+/* Lorsque la classe 'active' est ajoutée à la barre de navigation, elle devient visible */
+
+.navbar.active {
+  display: block;
+}
+
+/* Styles pour les liens à l'intérieur de la barre de navigation */
+
+.navbar .categorie {
+  display: block;
+  margin: 1.5rem 0;
+}
+
+/* Styles pour l'arrière-plan de la barre de navigation (nav-bg) */
+
+.nav-bg {
+  position: absolute;
+  top: 79px;
+  left: 0;
+  width: 100%;
+  height: 295px;
+  background: rgba(255, 255, 255, 0.1);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  z-index: 99;
+  display: none;
+}
+
+/* Lorsque la classe 'active' est ajoutée à l'arrière-plan de la barre de navigation, il devient visible */
+
+.nav-bg.active {
+  display: block;
+  }
+}
+
+/*--------------------------- PAGE DE REGISTER ----------------------------*/
+
+/* Style pour la boîte de connexion */
+
+.login-box {
+    padding-top: 100px;
+    position: relative;
+    width: 400px;
+    height: 78vh;
+    background: rgba(255, 255, 255, .3);
+    padding: 2rem;
+    border-radius: 20px;
+    border-left: 1px solid rgba(255, 255, 255, .3);
+    border-top: 1px solid rgba(255, 255, 255, .3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    -moz-backdrop-filter: blur(10px);
+    box-shadow: 20px 20px 40px -6px rgba(0, 0, 0, .2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Style pour le titre */
+  h2 {
+    font-size: 2em;
+    color: #fff;
+    text-align: center;
+    transition: .5s ease;
+  }
+  
+  /* Style pour la boîte de saisie */
+  .input-box {
+    position: relative;
+    width: 310px;
+    margin: 30px 0;
+  }
+  
+  /* Style pour la ligne de décoration de la boîte de saisie */
+  .input-box .input-line {
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2.5px;
+    background: #fff;
+    transition: .5s ease;
+  }
+  
+  /* Style pour l'étiquette de la boîte de saisie */
+  .input-box label {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    font-size: 1em;
+    color: #fff;
+    pointer-events: none;
+    transition: .5s ease;
+  }
+  
+  /* Style pour l'étiquette lorsqu'un champ est focus ou a une valeur */
+  .input-box input:focus~label,
+  .input-box input:valid~label {
+      top: -5px;
+  }
+  
+  /* Style pour le champ de saisie */
+  .input-box input {
+    width: 100%;
+    height: 50px;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    color: #fff;
+    padding: 0 35px 0 5px;
+    transition: .5s ease;
+  }
+  
+  /* Style pour l'icône dans la boîte de saisie */
+  .input-box .icon {
+    position: absolute;
+    right: 8px;
+    color: #fff;
+    font-size: 1.2em;
+    line-height: 57px;
+    transition: .5s ease;
+  }
+  
+  /* Style pour la section rappel/mot de passe oublié */
+  .remember-forgot {
+    color: #fff;
+    font-size: .9em;
+    margin: -15px 0 15px;
+    display: flex;
+    justify-content: space-between;
+    transition: .5s ease;
+  }
+  
+  /* Style pour la case à cocher dans la section rappel/mot de passe oublié */
+  .remember-forgot label input {
+    accent-color: #fff;
+    margin-right: 3px;
+    transition: .5s ease;
+  }
+  
+  /* Style pour le lien dans la section rappel/mot de passe oublié */
+  .remember-forgot a {
+    color: #fff;
+    text-decoration: none;
+    transition: color .5s ease;
+  }
+  
+  /* Style pour le lien au survol */
+  .remember-forgot a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Style pour le bouton d'inscription */
+  .buttonregister {
+    width: 100%;
+    height: 40px;
+    background: #fff;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 1em;
+    color: #191919;
+    font-weight: 500;
+    transition: .5s ease;
+  }
+  
+  /* Style pour le lien d'inscription */
+  .register-link {
+    color: #fff;
+    font-size: .9em;
+    text-align: center;
+    margin: 25px 0 10px;
+    transition: .5s ease;
+  }
+  
+  /* Style pour le lien dans le paragraphe de l'inscription */
+  .register-link p a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color .5s ease;
+  }
+  
+  /* Style pour le lien au survol */
+  .register-link p a:hover {
+    text-decoration: underline;
+  }
+  
+
+.input-box .deta + label {
+    opacity: 0.1;
+}
+
+  /* Style pour le message d'erreur */
+  .erreur-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  
